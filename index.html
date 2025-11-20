@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Feliz Cumpleaños Alejandra 🎉</title>
+    <style>
+      /* Reset básico */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Tipografías del sistema (puedes cambiar por Google Fonts si quieres) */
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #fce4ec;
+        font-family: "Poppins", sans-serif;
+        overflow: hidden;
+        position: relative;
+    }
+
+      /* Fondo pandas (decorativo con emojis) */
+      .panda {
+        position: fixed;
+        font-size: 2rem;
+        opacity: 0.5;
+        pointer-events: none;
+        z-index: 0;
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-18px) rotate(6deg);
+        }
+      }
+
+      /* Layout principal */
+      .wrapper {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+      }
+
+      /* Screen de la caja */
+      .gift-screen {
+        text-align: center;
+        width: 100%;
+        max-width: 480px;
+      }
+      .click-note {
+        color: #ff6b9d;
+        font-weight: 700;
+        margin-bottom: 80px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.08);
+      }
+      .gift-box {
+        width: 220px;
+        height: 220px;
+        margin: 0 auto;
+        position: relative;
+        cursor: pointer;
+      }
+      .box-base {
+        width: 100%;
+        height: 70%;
+        background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+        border-radius: 12px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        box-shadow: 0 12px 30px rgba(255, 107, 157, 0.25);
+        overflow: visible;
+      }
+      .box-lid {
+        width: 115%;
+        height: 28%;
+        background: linear-gradient(135deg, #ff8fab, #ffa8c0);
+        border-radius: 12px 12px 6px 6px;
+        position: absolute;
+        top: -8%;
+        left: -7.5%;
+        transform-origin: center center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ribbon {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+        width: 28px;
+        height: 100%;
+        background: linear-gradient(90deg, #ffeb3b, #ffd54f);
+        border-radius: 6px;
+      }
+      .bow {
+        position: absolute;
+        top: -36px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 36px;
+        background: #ffeb3b;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(255, 235, 59, 0.25);
+      }
+      .gift-box:active {
+        transform: scale(0.98);
+        transition: transform 0.08s;
+      }
+
+      /* efecto shake */
+      .gift-box.shake {
+        animation: shake 0.55s ease-in-out;
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px) rotate(-6deg);
+        }
+        50% {
+          transform: translateX(10px) rotate(6deg);
+        }
+        75% {
+          transform: translateX(-8px) rotate(-4deg);
+        }
+      }
+
+      /* anim apertura tapa */
+      .opening .box-lid {
+        animation: lidOpen 0.9s ease-out forwards;
+      }
+      @keyframes lidOpen {
+        to {
+          transform: translateY(-110px) rotateX(-45deg);
+          opacity: 0;
+        }
+      }
+
+      /* Contenedor de la tarjeta (invisible inicialmente) */
+      .card-root {
+        display: none;
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        perspective: 1100px;
+        padding: 10px;
+      }
+      .card-root.show {
+        display: block;
+      }
+
+      /* Tarjeta rosa */
+      .card {
+        width: 100%;
+        height: 80vh;
+        max-height: 680px;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          #ffc0cb 0%,
+          #ffb3c1 50%,
+          #ffa6b8 100%
+        );
+        box-shadow: 0 20px 60px rgba(255, 192, 203, 0.35);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Front (portada) y efecto de giro para "abrirse" */
+      .card-front {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 4;
+        border-radius: 20px;
+        backface-visibility: hidden;
+        transform-origin: left center;
+        background: linear-gradient(135deg, #ffc0cb, #ffb3c1);
+        animation: frontOpen 10s ease-in-out 1 forwards;
+        pointer-events: all;
+      }
+      .card-title {
+        font-family: "Brush Script MT", cursive;
+        font-size: 2.6rem;
+        color: #fff;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.18);
+        text-align: center;
+      }
+
+      /* Girar la portada para dejar ver el interior */
+      @keyframes frontOpen {
+        0% {
+          transform: rotateY(0deg);
+        }
+        60% {
+          transform: rotateY(-110deg);
+          opacity: 1;
+        }
+        100% {
+          transform: rotateY(-180deg);
+          opacity: 0;
+        }
+      }
+
+      /* Interior de la tarjeta (visible cuando la portada gira) */
+      .card-inside {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        gap: 20px;
+        padding: 28px;
+        box-sizing: border-box;
+        opacity: 0;
+        animation: insideShow 0.5s ease-in 0.9s forwards;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 255, 255, 0.98)
+        );
+      }
+      @keyframes insideShow {
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Izquierda foto */
+      .card-left {
+        flex: 0 0 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 12px;
+      }
+      .card-photo {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 14px;
+        border: 5px solid #ffc0cb;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+        object-fit: cover;
+      }
+
+      /* Derecha: mensaje */
+      .card-right {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        min-height: 0; /* CRUCIAL para que overflow funcione */
+        padding: 6px 6px 12px 6px;
+      }
+
+      /* Título y contenedor de mensaje */
+      .card-right h2 {
+        font-family: "Brush Script MT", cursive;
+        color: #ff6b9d;
+        font-size: 1.6rem;
+        text-align: center;
+        margin-bottom: 10px;
+        flex: 0 0 auto;
+      }
+      .message-scroll {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-right: 8px;
+        margin-bottom: 12px;
+      }
+      .message-scroll p {
+        font-family: "Garamond", serif;
+        font-size: 1rem;
+        line-height: 1.7;
+        text-align: justify;
+        color: #333;
+      }
+
+      /* Botón descarga */
+      .download-btn {
+        background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 40px;
+        cursor: pointer;
+        font-family: Georgia, serif;
+        font-size: 1rem;
+        align-self: center;
+        box-shadow: 0 6px 18px rgba(255, 107, 157, 0.25);
+      }
+
+      /* Scroll personalizado - opcional */
+      .message-scroll::-webkit-scrollbar {
+        width: 8px;
+      }
+      .message-scroll::-webkit-scrollbar-track {
+        background: #f3f3f3;
+        border-radius: 10px;
+      }
+      .message-scroll::-webkit-scrollbar-thumb {
+        background: #ffb3c1;
+        border-radius: 10px;
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        .card-left {
+          flex: 0 0 220px;
+        }
+        .card-photo {
+          max-width: 200px;
+        }
+      }
+      @media (max-width: 640px) {
+        .card-inside {
+          flex-direction: column;
+          padding: 18px;
+          gap: 12px;
+        }
+        .card-left {
+          display: flex;
+          justify-content: center;
+          padding-top: 0;
+        }
+        .card-right {
+          padding: 4px;
+        }
+        .card {
+          height: 88vh;
+        }
+        .card-front {
+          animation: frontOpen 10s ease-in-out 1 forwards;
+        }
+      }
+
+      /* Pequeña animación para texto al aparecer */
+      .fade-in {
+        animation: fadeIn 0.6s ease forwards;
+        opacity: 0;
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- pandas decorativos -->
+    <div class="panda" style="top: 10%; left: 10%;">🐼</div>
+    <div class="panda" style="top: 20%; right: 15%; animation-delay: 1s;">🐼</div>
+    <div class="panda" style="bottom: 15%; left: 20%; animation-delay: 2s;">🐼</div>
+    <div class="panda" style="top: 45%; right: 10%; animation-delay: 1.5s;">🐼</div>
+    <div class="panda" style="top: 60%; left: 5%; animation-delay: 0.5s;">🐼</div>
+    <div class="panda" style="top: 70%; right: 8%; animation-delay: 2.5s;">🐼</div>
+
+    <div class="wrapper" id="app">
+      <!-- Pantalla inicial: caja -->
+      <section class="gift-screen" id="giftScreen" aria-label="Regalo">
+        <div class="click-note" id="clickNote">
+          Tendrás que pulsar 5 veces para que se abra el regalo
+        </div>
+        <div
+          class="gift-box"
+          id="giftBox"
+          role="button"
+          aria-pressed="false"
+          tabindex="0"
+          title="Haz click"
+        >
+          <div class="box-base"></div>
+          <div class="box-lid"><div class="bow"></div></div>
+          <div class="ribbon"></div>
+        </div>
+      </section>
+
+      <!-- Tarjeta (oculta hasta abrir) -->
+      <section class="card-root" id="cardRoot" aria-hidden="true">
+        <article class="card" role="article" aria-label="Tarjeta de cumpleaños">
+          <div class="card-front" id="cardFront">
+            <h1 class="card-title">Feliz cumpleaños<br />Alejandra 🎉</h1>
+          </div>
+
+          <div class="card-inside">
+            <div class="card-left">
+              <!-- Reemplaza 'collage.png' por tu collage -->
+              <img
+                src="collage.png"
+                alt="Collage de recuerdos"
+                class="card-photo"
+              />
+            </div>
+
+            <div class="card-right">
+              <h2 class="fade-in">Feliz Cumpleaños ✨</h2>
+
+              <!-- contenedor con scroll -->
+              <div class="message-scroll" id="messageScroll">
+                <p class="card-message" id="cardMessage">
+                  Querida Alejandra,
+                  <br /><br />
+                  Un día como hoy nació una persona muy especial en mi vida: linda, amable e importante para mí, alguien a quien siempre deseo ver feliz.
+Feliz cumpleaños, Alejandra. Que este nuevo año te regale bendiciones, éxitos y momentos inolvidables. Que cada sueño que guardas en tu corazón encuentre el camino para hacerse realidad, y que sigas creciendo con la luz que te caracteriza.
+
+                  <br /><br />
+                  Es increíble pensar en aquel instante en que nos conocimos, justo en el momento indicado. Muy rápido te ganaste mi atención y mi cariño, y desde entonces sabes que siempre me tendrás a tu lado: para apoyarte, para celebrar contigo y también para secar tus lágrimas si alguna vez lo necesitas. 🌹
+                  <br /><br />
+                  Te quiero mucho. Cada momento contigo, desde los más grandes hasta los más pequeños detalles, tiene un valor inmenso para mí. Los temores y ansiedades que a veces aparecen pronto se irán, porque son parte del camino que todos recorremos. Nunca olvides sonreír: lo que te hace única es que seas tú misma.
+                  <br /><br />
+                  Como alguna vez te dije, sé siempre positiva, sigue siendo la persona amable y buena que eres, y verás cómo todo lo demás llegará por sí solo.
+                  <br /><br />
+                  Hoy celebro tu vida y te doy la bienvenida a tus 21 años ✨. Que esta etapa esté llena de alegría, amor y esperanza.
+                  <br /><br />
+                  Con todo mi cariño,<br />
+                  Álvaro ❣️
+                  <br /><br />
+            
+                </p>
+              </div>
+
+              <button class="download-btn" id="downloadBtn">
+                📷 Descargar Imágenes
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <!-- Música (se reproducirá después de interacción del usuario para evitar bloqueos) -->
+    <audio id="birthdayMusic" loop preload="auto">
+      <source src="cumple.mp3" type="audio/mpeg" />
+      Tu navegador no soporta audio.
+    </audio>
+
+    <script>
+      /* ---------------------------
+   Lógica: clicks, animaciones,
+   abrir tarjeta, reproducir audio,
+   descargas
+   --------------------------- */
+      (function () {
+        const giftBox = document.getElementById("giftBox");
+        const clickNote = document.getElementById("clickNote");
+        const cardRoot = document.getElementById("cardRoot");
+        const cardFront = document.getElementById("cardFront");
+        const giftScreen = document.getElementById("giftScreen");
+        const music = document.getElementById("birthdayMusic");
+        const downloadBtn = document.getElementById("downloadBtn");
+
+        let clicks = 0;
+        const maxClicks = 5;
+
+        // Actualiza texto contador
+        function updateNote() {
+          const left = maxClicks - clicks;
+          if (left > 0) {
+            clickNote.textContent = `¡Pulsa ${left} ${
+              left === 1 ? "vez" : "veces"
+            } más para abrir el regalo!`;
+          } else {
+            clickNote.textContent = "¡Prepárate! 🎁";
+          }
+        }
+
+        // Reproducir música — se llama tras interacción para evitar bloqueo del navegador
+        function playMusicSafe() {
+          // Si ya se está reproduciendo, no hacer nada
+          if (!music) return;
+          const p = music.play();
+          if (p !== undefined) {
+            p.catch((err) => {
+              // No crítico — muchos navegadores requieren interacción
+              console.log("Audio no se reprodujo automáticamente:", err);
+            });
+          }
+        }
+
+        // Abrir la caja (animaciones)
+        function openGift() {
+          // shake
+          giftBox.classList.add("shake");
+          setTimeout(() => giftBox.classList.remove("shake"), 600);
+
+          // abrir tapa (añadir clase opening)
+          setTimeout(() => {
+            giftBox.classList.add("opening");
+          }, 700);
+
+          // Transición a la tarjeta visible
+          setTimeout(() => {
+            // ocultar pantalla del regalo
+            giftScreen.style.transition = "opacity .45s ease";
+            giftScreen.style.opacity = "0";
+            setTimeout(() => {
+              giftScreen.style.display = "none";
+            }, 500);
+
+            // mostrar tarjeta y reproducir la musica (autorizada por la interacción previa)
+            cardRoot.classList.add("show");
+            cardRoot.setAttribute("aria-hidden", "false");
+
+            // reproducir música (es seguro porque hubo interacción del usuario)
+            playMusicSafe();
+          }, 1400);
+        }
+
+        // click handler en la caja
+        function handleClick() {
+          if (clicks >= maxClicks) return;
+          clicks++;
+          updateNote();
+
+          // pequeño feedback visual
+          giftBox.style.transform = "scale(.96)";
+          setTimeout(() => (giftBox.style.transform = ""), 120);
+
+          // Si llegó al max
+          if (clicks === maxClicks) {
+            // abrimos
+            openGift();
+          }
+        }
+
+        // Hace posible que la caja también se abra con teclado (accesibilidad)
+        giftBox.addEventListener("click", handleClick);
+        giftBox.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleClick();
+          }
+        });
+
+        // Al cargar, actualizamos
+        updateNote();
+
+        /* ---------------------------
+     Botón de descarga: descarga múltiples imágenes
+     (Reemplaza los nombres por tus archivos en el repo)
+     --------------------------- */
+        const images = [
+          "collage.png",
+          "familiar.jpg",
+          
+        ];
+
+        downloadBtn.addEventListener("click", function () {
+          // Cambiar texto y dar feedback
+          const original = downloadBtn.textContent;
+          downloadBtn.textContent = "¡Descargando... 💝";
+          downloadBtn.disabled = true;
+
+          images.forEach((img, i) => {
+            setTimeout(() => {
+              const a = document.createElement("a");
+              a.href = img;
+              a.download = `foto_${i + 1}.jpg`;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            }, i * 450);
+          });
+
+          setTimeout(() => {
+            downloadBtn.textContent = original;
+            downloadBtn.disabled = false;
+          }, images.length * 450 + 600);
+        });
+
+        /* Si quieres que la música espere 1 click extra (por si algunos browsers son más rígidos),
+     puedes comentar la llamada a playMusicSafe() en openGift y descomentar lo siguiente:
+  */
+        // document.addEventListener('click', playMusicSafe, { once:true });
+      })();
+    </script>
+  </body>
+</html>
